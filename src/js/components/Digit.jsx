@@ -1,3 +1,13 @@
 import React from "react";
 
-export const Digit = ({number}) => <div className="reloj">{number}</div>
+class Digit extends React.Component {
+  render() {
+    return (
+      <div className="digit">
+        {this.props.number}
+      </div>
+    );
+  }
+}
+
+export { Digit };

@@ -1,37 +1,47 @@
-import React, { useEffect, useState } from "react";
-
-//include images into your bundle
-import rigoImage from "../../img/rigo-baby.jpg";
-import {Digit} from "./Digit.jsx"
+import React from "react";
+import { Digit } from "./Digit.jsx";
 import '@fortawesome/fontawesome-free/css/all.min.css';
-//create your first component
-const Home = () => {
+
+class Home extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      timer: 0,
+    };
+    this.timerRef = null; 
+  }
+
+ 
+  incrementTimer = () => {
+    this.setState({ timer: this.state.timer + 1 });
+  };
 
 
-const [timer, setTimer] = useState(0)
+  componentDidMount() {
+    this.timerRef = setInterval(this.incrementTimer, 1000); 
+  }
 
-useEffect (()=> {
+  
+  componentWillUnmount() {
+    clearInterval(this.timerRef); 
+  }
 
-setTimeout (()=> {
-	setTimer(value => value+1)
-}, 1000)
+  render() {
+    const { timer } = this.state;
 
-}, [timer] )
-
-	return (
-		<main className="text-center">
-			<section className="contador-caja">
-           <Digit number={<span className="fa-solid fa-clock"></span>}/>
-		   <Digit number={Math. floor (timer/10000)%10}/>
-		   <Digit number={Math. floor (timer/10000)%10}/>
-		   <Digit number={Math. floor (timer/1000)%10}/>
-		   <Digit number={Math. floor (timer/100)%10}/>
-		   <Digit number={Math. floor (timer/10)%10}/>
-		   <Digit number={Math.floor(timer%10) }/>
-
-		</section>
-		</main>
-	);
-};
+    return (
+      <main className="text-center">
+        <section className="contador-caja">
+          <Digit number={<span className="fa-solid fa-clock"></span>} />
+          <Digit number={Math.floor(timer / 10000) % 10} />
+          <Digit number={Math.floor(timer / 1000) % 10} />
+          <Digit number={Math.floor(timer / 100) % 10} />
+          <Digit number={Math.floor(timer / 10) % 10} />
+          <Digit number={Math.floor(timer % 10)} />
+        </section>
+      </main>
+    );
+  }
+}
 
 export default Home;
